@@ -1,5 +1,5 @@
 # Emergency Locations
-![Flutter](https://img.shields.io/badge/Flutter-3.10.5-blue)    ![Dart](https://img.shields.io/badge/Dart-3.0.5-green)
+![Flutter](https://img.shields.io/badge/Flutter-3.24.0-blue)    ![Dart](https://img.shields.io/badge/Dart-3.5.0-green)
 
 A simple Flutter mobile application that fetches data from an API and displays it in a list format. When clicking on any item in the list, the app will navigate to a details page and show the fetched information.
 
