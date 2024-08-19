@@ -27,20 +27,22 @@ class LocationsPage extends StatefulWidget {
 }
 
 class _LocationsPageState extends State<LocationsPage> {
-  late Future<List<Location>> locations;
+  List locations = [];
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    locations = fetchLocations();
+    fetchLocations();
   }
 
-  Future<List<Location>> fetchLocations() async {
+  fetchLocations() async {
     final response = await http.get(Uri.parse('https://backend.houston24hourer.com/api/admin/locations'));
-
     if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
-      return jsonResponse.map((location) => Location.fromJson(location)).toList();
+      setState(() {
+        locations = json.decode(response.body);
+        isLoading = false;
+      });
     } else {
       throw Exception('Failed to load locations');
     }
@@ -52,40 +54,35 @@ class _LocationsPageState extends State<LocationsPage> {
       appBar: AppBar(
         title: Text('Emergency Locations'),
       ),
-      body: FutureBuilder<List<Location>>(
-        future: locations,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: locations.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  leading: Image.network(
-                    'https://backend.houston24hourer.com/storage/${snapshot.data![index].img}',
-                    width: 50,
-                    height: 50,
-                    fit: BoxFit.cover,
+                final location = locations[index];
+                return Card(
+                  elevation: 5,
+                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  child: ListTile(
+                    leading: Image.network(
+                      'https://backend.houston24hourer.com/storage/${location['img']}',
+                      width: 100,
+                      fit: BoxFit.cover,
+                    ),
+                    title: Text(location['title']),
+                    subtitle: Text('${location['city']}, ${location['state']}\n${location['address']}'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailsPage(location: location),
+                        ),
+                      );
+                    },
                   ),
-                  title: Text(snapshot.data![index].title),
-                  subtitle: Text('${snapshot.data![index].city}, ${snapshot.data![index].state}\n${snapshot.data![index].address}'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DetailsPage(location: snapshot.data![index]),
-                      ),
-                    );
-                  },
                 );
               },
-            );
-          } else if (snapshot.hasError) {
-            return Center(child: Text("${snapshot.error}"));
-          }
-
-          return Center(child: CircularProgressIndicator());
-        },
-      ),
+            ),
     );
   }
 }
