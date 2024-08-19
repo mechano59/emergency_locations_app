@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'models/location.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class DetailsPage extends StatelessWidget {
   final Map location;
