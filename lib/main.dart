@@ -8,20 +8,46 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  ThemeMode _themeMode = ThemeMode.light;
+
+  void _toggleTheme() {
+    setState(() {
+      _themeMode = _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Emergency Locations',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        brightness: Brightness.light,
       ),
-      home: LocationsPage(),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+      ),
+      themeMode: _themeMode, // Manage light/dark theme mode
+      home: LocationsPage(
+        toggleTheme: _toggleTheme,
+        themeIcon: _themeMode == ThemeMode.light ? Icons.dark_mode : Icons.light_mode,
+      ),
     );
   }
 }
 
 class LocationsPage extends StatefulWidget {
+  final VoidCallback toggleTheme;
+  final IconData themeIcon;
+
+  LocationsPage({required this.toggleTheme, required this.themeIcon});
+
   @override
   _LocationsPageState createState() => _LocationsPageState();
 }
@@ -53,6 +79,12 @@ class _LocationsPageState extends State<LocationsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Emergency Locations'),
+        actions: [
+          IconButton(
+            icon: Icon(widget.themeIcon),
+            onPressed: widget.toggleTheme,
+          ),
+        ],
       ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
