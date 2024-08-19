@@ -16,16 +16,16 @@ A simple Flutter mobile application that fetches data from an API and displays i
 ## Screenshots
 
 ### Main Page Light Theme
-![Main Page Light](https://github.com/mechano59/Pengui-Scripter/blob/main/screenshots/Screenshot-01.png)
+![Main Page Light](https://github.com/mechano59/emergency_locations_app/blob/main/screenshots/Screenshot-01.png)
 
 ### Details Page Light Theme
-![Details Page Light](https://github.com/mechano59/Pengui-Scripter/blob/main/screenshots/Screenshot-02.png)
+![Details Page Light](https://github.com/mechano59/emergency_locations_app/blob/main/screenshots/Screenshot-02.png)
 
 ### Main Page Dark Theme
-![Main Page Dark](https://github.com/mechano59/Pengui-Scripter/blob/main/screenshots/Screenshot-03.png)
+![Main Page Dark](https://github.com/mechano59/emergency_locations_app/blob/main/screenshots/Screenshot-03.png)
 
 ### Details Page Dark Theme
-![Details Page Dark](https://github.com/mechano59/Pengui-Scripter/blob/main/screenshots/Screenshot-04.png)
+![Details Page Dark](https://github.com/mechano59/emergency_locations_app/blob/main/screenshots/Screenshot-04.png)
 
 ## License
 
